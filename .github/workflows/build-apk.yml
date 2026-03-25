@@ -32,6 +32,20 @@ jobs:
           cp pubspec.yaml /tmp/lbma_app/pubspec.yaml
           cp -r icons /tmp/lbma_app/icons 2>/dev/null || true
 
+      - name: Fix Kotlin stdlib conflict
+        run: |
+          sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "1.9.0"/' /tmp/lbma_app/android/build.gradle
+          cat >> /tmp/lbma_app/android/app/build.gradle << 'GRADLE'
+
+          configurations.all {
+              resolutionStrategy {
+                  force "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
+                  force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0"
+                  force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0"
+              }
+          }
+          GRADLE
+
       - name: Get dependencies
         working-directory: /tmp/lbma_app
         run: flutter pub get
