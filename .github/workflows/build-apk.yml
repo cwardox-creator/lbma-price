@@ -25,14 +25,23 @@ jobs:
           flutter-version: '3.22.0'
           channel: 'stable'
 
+      - name: Create Flutter project scaffold
+        run: |
+          flutter create --org com.lbma --project-name lbma_gold_price /tmp/lbma_app
+          cp -r lib /tmp/lbma_app/
+          cp pubspec.yaml /tmp/lbma_app/pubspec.yaml
+          cp -r icons /tmp/lbma_app/icons 2>/dev/null || true
+
       - name: Get dependencies
+        working-directory: /tmp/lbma_app
         run: flutter pub get
 
       - name: Build APK
+        working-directory: /tmp/lbma_app
         run: flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: lbma-gold-price.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: /tmp/lbma_app/build/app/outputs/flutter-apk/app-release.apk
