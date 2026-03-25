@@ -146,8 +146,11 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   // ==================== WIDGETS ====================
 
   PreferredSizeWidget _buildAppBar() {
+    final screenH = MediaQuery.of(context).size.height;
+    final appBarH = screenH * 0.21;
+    final hPad = MediaQuery.of(context).size.width * 0.05;
     return PreferredSize(
-      preferredSize: const Size.fromHeight(170),
+      preferredSize: Size.fromHeight(appBarH),
       child: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -160,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             children: [
               // Title row
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+                padding: EdgeInsets.fromLTRB(hPad, screenH * 0.012, hPad, 0),
                 child: Row(
                   children: [
                     Container(
@@ -192,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                   ],
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: screenH * 0.01),
               // Metal selector
               _metalSelector(),
               const Spacer(),
@@ -691,18 +694,19 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   // ==================== FOOTER ====================
   Widget _buildFooter() {
+    final screenH = MediaQuery.of(context).size.height;
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: EdgeInsets.symmetric(vertical: screenH * 0.016),
       decoration: const BoxDecoration(
         border: Border(top: BorderSide(color: LFC.border)),
       ),
       child: const Column(
         children: [
           Text("YOU'LL NEVER WALK ALONE", style: TextStyle(
-            fontSize: 16, fontWeight: FontWeight.w700,
+            fontSize: 14, fontWeight: FontWeight.w700,
             color: LFC.red, letterSpacing: 3,
           )),
-          SizedBox(height: 6),
+          SizedBox(height: 4),
           Text('Туткабоев Канат', style: TextStyle(
             fontSize: 11, color: LFC.muted, letterSpacing: 1,
           )),
