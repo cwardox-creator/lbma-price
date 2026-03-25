@@ -8,7 +8,7 @@ class GoldPrice {
     final raw = json['v'] as List<dynamic>;
     return GoldPrice(
       date: json['d'] as String,
-      values: raw.map((e) => (e as num).toDouble()).toList(),
+      values: raw.map((e) => e == null ? 0.0 : (e as num).toDouble()).toList(),
     );
   }
 
