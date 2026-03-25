@@ -30,7 +30,12 @@ jobs:
           flutter create --org com.lbma --project-name lbma_gold_price /tmp/lbma_app
           cp -r lib /tmp/lbma_app/
           cp pubspec.yaml /tmp/lbma_app/pubspec.yaml
-          cp -r icons /tmp/lbma_app/icons 2>/dev/null || true
+          cp -r icons/mipmap-* /tmp/lbma_app/android/app/src/main/res/ 2>/dev/null || true
+
+      - name: Add INTERNET permission and set app label
+        run: |
+          sed -i 's/<manifest xmlns:android="http:\/\/schemas.android.com\/apk\/res\/android">/<manifest xmlns:android="http:\/\/schemas.android.com\/apk\/res\/android">\n    <uses-permission android:name="android.permission.INTERNET"\/>/' /tmp/lbma_app/android/app/src/main/AndroidManifest.xml
+          sed -i 's/android:label="[^"]*"/android:label="LBMA TK"/' /tmp/lbma_app/android/app/src/main/AndroidManifest.xml
 
       - name: Fix Kotlin stdlib conflict
         run: |
