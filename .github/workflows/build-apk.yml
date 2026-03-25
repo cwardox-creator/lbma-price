@@ -22,7 +22,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
+          flutter-version: '3.24.5'
           channel: 'stable'
 
       - name: Create Flutter project scaffold
@@ -34,14 +34,14 @@ jobs:
 
       - name: Fix Kotlin stdlib conflict
         run: |
-          sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "1.9.0"/' /tmp/lbma_app/android/build.gradle
+          sed -i 's/ext.kotlin_version = .*/ext.kotlin_version = "2.0.0"/' /tmp/lbma_app/android/build.gradle
           cat >> /tmp/lbma_app/android/app/build.gradle << 'GRADLE'
 
           configurations.all {
               resolutionStrategy {
-                  force "org.jetbrains.kotlin:kotlin-stdlib:1.9.0"
-                  force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0"
-                  force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0"
+                  force "org.jetbrains.kotlin:kotlin-stdlib:2.0.0"
+                  force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:2.0.0"
+                  force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.0.0"
               }
           }
           GRADLE
